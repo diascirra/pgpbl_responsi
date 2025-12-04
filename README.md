@@ -33,7 +33,7 @@ Gawè Yogyakarta adalah aplikasi mobile berbasis React Native yang membantu masy
 - VS Code
 
 ## 📚 Sumber Data
-- [Visiting Jogja – Calendar of Event Desember 2025](https://visitingjogja.jogjaprov.go.id/event-agenda-pariwisata-jogja/)
+- [Visiting Jogja – Calendar of Event 2025](https://visitingjogja.jogjaprov.go.id/event-agenda-pariwisata-jogja/)
 - Google Maps API (koordinat lokasi event)  
 
 ## 📸 Tangkapan Layar Komponen Penting Produk
