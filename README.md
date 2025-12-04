@@ -1,50 +1,70 @@
-# Welcome to your Expo app 👋
+# Gawè Yogyakarta
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📌 Nama Produk
+**Gawè Yogyakarta** – Aplikasi eksplorasi event lokal berbasis peta dan kalender untuk wilayah Yogyakarta dan Sleman.
 
-## Get started
+## 📝 Deskripsi Produk
+Gawè Yogyakarta adalah aplikasi mobile berbasis React Native yang membantu masyarakat dan wisatawan menemukan serta menjelajahi berbagai acara di Yogyakarta. Aplikasi ini mengintegrasikan peta interaktif, kalender event, dan kategori warna untuk memudahkan pencarian acara sesuai minat. Setiap detail visual dirancang minimalis namun tetap mencerminkan identitas budaya lokal.
 
-1. Install dependencies
+## 🧩 Komponen Pembangun Produk
 
-   ```bash
-   npm install
-   ```
+### Frontend
+- React Native + Expo Router
+- TypeScript
+- React Navigation 
+- React Native Maps
+- WebView
+- UI/UX Components
 
-2. Start the app
+### Backend
+- Firebase Realtime Database
 
-   ```bash
-   npx expo start
-   ```
+### Desain
+- Color Palette
+- Fonts Awesome 5 & Material Icons
 
-In the output, you'll find options to open the app in a
+### Peta
+- React Native Maps
+- WebView
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Tool Pendukung
+- Git + GitHub  
+- Expo CLI
+- VS Code
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📚 Sumber Data
+- [Visiting Jogja – Calendar of Event Desember 2025](https://visitingjogja.jogjaprov.go.id/event-agenda-pariwisata-jogja/)
+- Google Maps API (koordinat lokasi event)  
 
-## Get a fresh project
+## 📸 Tangkapan Layar Komponen Penting Produk
 
-When you're ready, run:
+### Get Started Page
+![Get Started](screenshots/getstarted.jpg)
 
-```bash
-npm run reset-project
-```
+### Register & Login Page
+![Register](screenshots/register.jpg)
+![Login](screenshots/login.jpg)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Home Page
+![Explore](screenshots/home.jpg)
 
-## Learn more
+### Schedule Page
+![Explore](screenshots/schedule.jpg)
 
-To learn more about developing your project with Expo, look at the following resources:
+### List Page
+![Explore](screenshots/list.jpg)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Map Page
+![Map](screenshots/map.jpg)
+![Map](screenshots/map1.jpg)
+![Explore](screenshots/rute.jpg)
 
-## Join the community
+### Event Detail Page
+![Event Detail](screenshots/eventdetail.jpg)
 
-Join our community of developers creating universal apps.
+### Form Input & Edit
+![Explore](screenshots/add.jpg)
+![Explore](screenshots/edit.jpg)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Profile Page
+![Profile](screenshots/profile.jpg)
