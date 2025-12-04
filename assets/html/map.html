@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Event Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .filter-box {
+            position: fixed;
+            top: 15px;
+            right: 10px;
+            /* pindah ke kanan */
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            width: 180px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="filter-box">
+        <select id="categoryFilter">
+            <option value="all">All</option>
+            <option value="tourism_culture">Tourism & Culture</option>
+            <option value="government">Government</option>
+            <option value="education">Education</option>
+            <option value="creative">Creative</option>
+            <option value="sports">Sports</option>
+            <option value="health">Health</option>
+            <option value="economy">Economy</option>
+        </select>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map');
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var yogyakartaBounds = [[-7.85, 110.28], [-7.65, 110.45]];
+        map.fitBounds(yogyakartaBounds);
+        map.setMaxBounds(yogyakartaBounds);
+        map.setZoom(13);
+
+        var markerLayer = L.layerGroup().addTo(map);
+
+        function getIcon(category) {
+            let url;
+            switch (category) {
+                case "tourism_culture":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png";
+                    break;
+                case "government":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png";
+                    break;
+                case "education":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png";
+                    break;
+                case "creative":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png";
+                    break;
+                case "sports":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png";
+                    break;
+                case "health":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png";
+                    break;
+                case "economy":
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-black.png";
+                    break;
+                default:
+                    url = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png";
+            }
+
+            return L.icon({
+                iconUrl: url,
+                shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+        }
+
+        function loadMarkers(events) {
+            markerLayer.clearLayers();
+            var selected = document.getElementById("categoryFilter").value;
+            events.forEach(ev => {
+                if (selected !== "all" && ev.category !== selected) return;
+                var marker = L.marker([ev.latitude, ev.longitude], { icon: getIcon(ev.category) }).addTo(markerLayer);
+                var gmaps = `https://www.google.com/maps/dir/?api=1&destination=${ev.latitude},${ev.longitude}`;
+                var popup = `
+        <div style="font-size:16px; max-width:220px;">
+          <b>${ev.name}</b><br>
+          <small>${ev.description}</small><br><br>
+          <a href="${gmaps}" target="_blank">
+            <button style="padding:10px 14px; font-size:14px; border:none; background:#EE6983; color:#F5EFE6; border-radius:6px;">
+              Go to Location
+            </button>
+          </a>
+        </div>`;
+                marker.bindPopup(popup);
+            });
+        }
+
+        function handleMessage(event) {
+            var data = JSON.parse(event.data);
+
+            if (data.events) {
+                loadMarkers(data.events);
+            }
+
+            if (data.focus) {
+                var { lat, lng, category, name, description } = data.focus;
+                if (!lat || !lng || isNaN(lat) || isNaN(lng)) return;
+
+                map.setView([lat, lng], 16);
+                markerLayer.clearLayers();
+
+                var marker = L.marker([lat, lng], { icon: getIcon(category) }).addTo(markerLayer);
+                marker.bindPopup(
+                    `<div style="font-size:16px; max-width:220px;">
+          <b>${name || "Event here"}</b><br>
+          <small>${description || ""}</small>
+        </div>`
+                ).openPopup();
+            }
+        }
+
+        document.addEventListener("message", handleMessage);
+        window.addEventListener("message", handleMessage);
+
+        document.getElementById("categoryFilter").addEventListener("change", () => {
+            window.ReactNativeWebView.postMessage("filter_changed");
+        });
+    </script>
+</body>
+
+</html>
